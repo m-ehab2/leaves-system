@@ -15,3 +15,14 @@ mat-table {
 .mat-column-status {
   flex: 0.5;
 }
+
+.clickable-table {
+  .mat-mdc-row {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+}

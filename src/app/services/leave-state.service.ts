@@ -1,0 +1,71 @@
+import { Injectable, signal, computed } from '@angular/core';
+import { LeaveRequest } from '../models/leave-request';
+import { LeaveRequestService } from './leave-request.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LeaveStateService {
+  private leaveRequests = signal<LeaveRequest[]>([]);
+  isLoading = signal(true);
+  
+  constructor(private leaveService: LeaveRequestService) {
+    this.loadLeaveRequests();
+  }
+
+  // Computed signals for stats
+  public stats = computed(() => {
+    return this.leaveRequests().reduce(
+      (acc, leave) => {
+        switch (leave.status.toLowerCase()) {
+          case 'pending':
+            acc.pending++;
+            break;
+          case 'approved':
+            acc.approved++;
+            break;
+          case 'rejected':
+            acc.rejected++;
+            break;
+        }
+        return acc;
+      },
+      { pending: 0, approved: 0, rejected: 0 }
+    );
+  });
+
+  // Getter for leave requests
+  public getLeaveRequests() {
+    return this.leaveRequests;
+  }
+
+  // Load leave requests
+  private loadLeaveRequests() {
+    this.isLoading.set(true);
+    this.leaveService.getLeaveRequests().subscribe({
+      next: (requests) => {
+        this.leaveRequests.set(requests);
+        this.isLoading.set(false);
+      },
+      error: () => {
+        this.isLoading.set(false);
+      }
+    });
+  }
+
+  // Add new leave request
+  public addLeaveRequest(request: LeaveRequest) {
+    return this.leaveService.addLeaveRequest(request).subscribe(newRequest => {
+      this.leaveRequests.update(requests => [...requests, newRequest]);
+    });
+  }
+
+  // Update leave request
+  public updateLeaveRequest(request: LeaveRequest) {
+    return this.leaveService.updateLeaveRequest(request).subscribe(() => {
+      this.leaveRequests.update(requests => 
+        requests.map(r => r.id === request.id ? request : r)
+      );
+    });
+  }
+}

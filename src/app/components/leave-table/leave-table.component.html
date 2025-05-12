@@ -1,4 +1,4 @@
-<mat-table [dataSource]="filteredLeaveRequests()">
+<mat-table [dataSource]="filteredLeaveRequests()" class="clickable-table">
   <ng-container matColumnDef="employee">
     <mat-header-cell *matHeaderCellDef>Employee</mat-header-cell>
     <mat-cell *matCellDef="let request">{{request.employeeName}}</mat-cell>
@@ -20,7 +20,7 @@
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)"></mat-row>
 </mat-table>
 
 <mat-paginator 

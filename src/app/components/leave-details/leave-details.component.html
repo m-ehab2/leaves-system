@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Leave Request Details</h2>
+
+<mat-dialog-content>
+  <div class="details-grid">
+    <div class="detail-item">
+      <strong>Employee:</strong>
+      <span>{{data.employeeName}}</span>
+    </div>
+    
+    <div class="detail-item">
+      <strong>Start Date:</strong>
+      <span>{{data.startDate | date}}</span>
+    </div>
+    
+    <div class="detail-item">
+      <strong>End Date:</strong>
+      <span>{{data.endDate | date}}</span>
+    </div>
+    
+    <div class="detail-item">
+      <strong>Status:</strong>
+      <span [class]="'status-' + data.status.toLowerCase()">{{data.status}}</span>
+    </div>
+    
+    <div class="detail-item full-width">
+      <strong>Reason:</strong>
+      <p>{{data.reason}}</p>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <ng-container *ngIf="isAdmin && data.status === 'Pending'">
+    <button mat-button color="warn" (click)="onReject()">Reject</button>
+    <button mat-raised-button color="primary" (click)="onApprove()">Approve</button>
+  </ng-container>
+  <button mat-button (click)="onClose()">Close</button>
+</mat-dialog-actions>

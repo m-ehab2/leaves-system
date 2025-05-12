@@ -1,0 +1,36 @@
+.details-grid {
+  display: grid;
+  gap: 16px;
+  padding: 16px 0;
+}
+
+.detail-item {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: baseline;
+
+  &.full-width {
+    grid-column: 1 / -1;
+    
+    p {
+      margin: 8px 0 0;
+    }
+  }
+}
+
+.status-pending {
+  color: #ffa000;
+}
+
+.status-approved {
+  color: #00c853;
+}
+
+.status-rejected {
+  color: #d32f2f;
+}
+
+mat-dialog-actions {
+  padding: 16px 0;
+  gap: 8px;
+}
