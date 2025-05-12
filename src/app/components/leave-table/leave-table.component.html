@@ -1,30 +1,57 @@
-<mat-table [dataSource]="filteredLeaveRequests()" class="clickable-table">
-  <ng-container matColumnDef="employee">
-    <mat-header-cell *matHeaderCellDef>Employee</mat-header-cell>
-    <mat-cell *matCellDef="let request">{{request.employeeName}}</mat-cell>
-  </ng-container>
+<div class="table-container">
+  <!-- Loading skeleton -->
+  <div *ngIf="isLoading()" class="loading-skeleton">
+    <div class="skeleton-header">
+      <div class="skeleton-cell" *ngFor="let col of displayedColumns"></div>
+    </div>
+    <div class="skeleton-row" *ngFor="let i of [1, 2, 3, 4, 5]">
+      <div class="skeleton-cell" *ngFor="let col of displayedColumns"></div>
+    </div>
+  </div>
 
-  <ng-container matColumnDef="startDate">
-    <mat-header-cell *matHeaderCellDef>Start Date</mat-header-cell>
-    <mat-cell *matCellDef="let request">{{request.startDate | date}}</mat-cell>
-  </ng-container>
+  <!-- Actual table -->
+  <mat-table
+    [dataSource]="dataSource"
+    class="clickable-table"
+    [hidden]="isLoading()"
+  >
+    <ng-container matColumnDef="employee">
+      <mat-header-cell *matHeaderCellDef>Employee</mat-header-cell>
+      <mat-cell *matCellDef="let request">{{ request.employeeName }}</mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="endDate">
-    <mat-header-cell *matHeaderCellDef>End Date</mat-header-cell>
-    <mat-cell *matCellDef="let request">{{request.endDate | date}}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="startDate">
+      <mat-header-cell *matHeaderCellDef>Start Date</mat-header-cell>
+      <mat-cell *matCellDef="let request">{{
+        request.startDate | date
+      }}</mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="status">
-    <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
-    <mat-cell *matCellDef="let request">{{request.status}}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="endDate">
+      <mat-header-cell *matHeaderCellDef>End Date</mat-header-cell>
+      <mat-cell *matCellDef="let request">{{
+        request.endDate | date
+      }}</mat-cell>
+    </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)"></mat-row>
-</mat-table>
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+      <mat-cell *matCellDef="let request">{{ request.status }}</mat-cell>
+    </ng-container>
 
-<mat-paginator 
-  [length]="filteredLeaveRequests().length"
-  [pageSize]="10"
-  [pageSizeOptions]="[5, 10, 25, 100]">
-</mat-paginator>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="onRowClick(row)"
+    ></mat-row>
+  </mat-table>
+
+  <mat-paginator
+    [length]="filteredLeaveRequests().length"
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 25]"
+    (page)="onPageChange()"
+    [hidden]="isLoading()"
+  >
+  </mat-paginator>
+</div>

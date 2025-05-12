@@ -2,6 +2,20 @@
   <h2>Dashboard</h2>
 
   <div class="stats-cards">
+    <mat-card class="stat-card total" [class.skeleton]="isLoading()">
+      <mat-card-content>
+        <div class="stat-label">Total Requests</div>
+        <div class="stat-number" [class.skeleton-text]="isLoading()">
+          {{
+            isLoading()
+              ? ""
+              : leaveStats().pending +
+                leaveStats().approved +
+                leaveStats().rejected
+          }}
+        </div>
+      </mat-card-content>
+    </mat-card>
     <mat-card class="stat-card pending" [class.skeleton]="isLoading()">
       <mat-card-content>
         <div class="stat-label">Pending Requests</div>

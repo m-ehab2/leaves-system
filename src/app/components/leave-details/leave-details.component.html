@@ -4,35 +4,42 @@
   <div class="details-grid">
     <div class="detail-item">
       <strong>Employee:</strong>
-      <span>{{data.employeeName}}</span>
+      <span>{{ data.employeeName }}</span>
     </div>
-    
+
     <div class="detail-item">
       <strong>Start Date:</strong>
-      <span>{{data.startDate | date}}</span>
+      <span>{{ data.startDate | date }}</span>
     </div>
-    
+
     <div class="detail-item">
       <strong>End Date:</strong>
-      <span>{{data.endDate | date}}</span>
+      <span>{{ data.endDate | date }}</span>
     </div>
-    
+
     <div class="detail-item">
       <strong>Status:</strong>
-      <span [class]="'status-' + data.status.toLowerCase()">{{data.status}}</span>
+      <span [class]="'status-' + data.status.toLowerCase()">{{
+        data.status
+      }}</span>
     </div>
-    
+
     <div class="detail-item full-width">
       <strong>Reason:</strong>
-      <p>{{data.reason}}</p>
+      <p>{{ data.reason }}</p>
     </div>
   </div>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <ng-container *ngIf="isAdmin && data.status === 'Pending'">
-    <button mat-button color="warn" (click)="onReject()">Reject</button>
-    <button mat-raised-button color="primary" (click)="onApprove()">Approve</button>
-  </ng-container>
-  <button mat-button (click)="onClose()">Close</button>
+  <div style="padding: 0px 10px">
+    <ng-container *ngIf="isAdmin && data.status === 'Pending'">
+      <button mat-button color="warn" (click)="onReject()">Reject</button>
+      <button mat-raised-button color="primary" (click)="onApprove()">
+        Approve
+      </button>
+    </ng-container>
+    <button *ngIf="isAdmin" mat-button (click)="onDelete()">Delete</button>
+    <button mat-button (click)="onClose()">Close</button>
+  </div>
 </mat-dialog-actions>

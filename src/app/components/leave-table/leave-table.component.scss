@@ -16,6 +16,44 @@ mat-table {
   flex: 0.5;
 }
 
+.table-container {
+  position: relative;
+  min-height: 300px;
+}
+
+.loading-skeleton {
+  width: 100%;
+}
+
+.skeleton-header, .skeleton-row {
+  display: flex;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.skeleton-header {
+  height: 56px;
+}
+
+.skeleton-cell {
+  flex: 1;
+  height: 24px;
+  margin: 0 12px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 .clickable-table {
   .mat-mdc-row {
     cursor: pointer;

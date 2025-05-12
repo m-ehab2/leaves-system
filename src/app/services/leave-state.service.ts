@@ -7,7 +7,7 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class LeaveStateService {
-  private leaveRequests = signal<LeaveRequest[]>([]);
+  leaveRequests = signal<LeaveRequest[]>([]);
   isLoading = signal(true);
 
   constructor(private leaveService: LeaveRequestService) {
@@ -63,12 +63,26 @@ export class LeaveStateService {
     );
   }
 
+  // Delete new leave request
+  public deleteLeaveRequest(id: number) {
+    return this.leaveService.deleteLeaveRequest(id).pipe(
+      tap((newRequest) => {
+        console.log({ id });
+        this.leaveRequests.update((requests) =>
+          requests.filter((r) => r.id !== id)
+        );
+      })
+    );
+  }
+
   // Update leave request
   public updateLeaveRequest(request: LeaveRequest) {
-    return this.leaveService.updateLeaveRequest(request).subscribe(() => {
-      this.leaveRequests.update((requests) =>
-        requests.map((r) => (r.id === request.id ? request : r))
-      );
-    });
+    return this.leaveService.updateLeaveRequest(request).pipe(
+      tap((newRequest) => {
+        this.leaveRequests.update((requests) =>
+          requests.map((r) => (r.id === request.id ? request : r))
+        );
+      })
+    );
   }
 }

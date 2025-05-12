@@ -5,49 +5,55 @@ import { catchError, tap } from 'rxjs/operators';
 import { LeaveRequest } from '../models/leave-request';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LeaveRequestService {
-  private leaveRequestsUrl = 'api/leaveRequests';  // URL to web api
-  
+  private leaveRequestsUrl = 'api/leaveRequests'; // URL to web api
+
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /** GET leave requests from the server */
   getLeaveRequests(): Observable<LeaveRequest[]> {
-    return this.http.get<LeaveRequest[]>(this.leaveRequestsUrl)
-      .pipe(
-        tap(_ => console.log('fetched leave requests')),
-        catchError(this.handleError<LeaveRequest[]>('getLeaveRequests', []))
-      );
+    return this.http.get<LeaveRequest[]>(this.leaveRequestsUrl).pipe(
+      tap((_) => console.log('fetched leave requests')),
+      catchError(this.handleError<LeaveRequest[]>('getLeaveRequests', []))
+    );
   }
 
   /** GET leave request by id */
   getLeaveRequest(id: number): Observable<LeaveRequest> {
     const url = `${this.leaveRequestsUrl}/${id}`;
     return this.http.get<LeaveRequest>(url).pipe(
-      tap(_ => console.log(`fetched leave request id=${id}`)),
+      tap((_) => console.log(`fetched leave request id=${id}`)),
       catchError(this.handleError<LeaveRequest>(`getLeaveRequest id=${id}`))
     );
   }
 
   /** POST: add a new leave request to the server */
   addLeaveRequest(leaveRequest: LeaveRequest): Observable<LeaveRequest> {
-    return this.http.post<LeaveRequest>(this.leaveRequestsUrl, leaveRequest, this.httpOptions).pipe(
-      tap((newLeaveRequest: LeaveRequest) => console.log(`added leave request w/ id=${newLeaveRequest.id}`)),
-      catchError(this.handleError<LeaveRequest>('addLeaveRequest'))
-    );
+    return this.http
+      .post<LeaveRequest>(this.leaveRequestsUrl, leaveRequest, this.httpOptions)
+      .pipe(
+        tap((newLeaveRequest: LeaveRequest) =>
+          console.log(`added leave request w/ id=${newLeaveRequest.id}`)
+        ),
+        catchError(this.handleError<LeaveRequest>('addLeaveRequest'))
+      );
   }
 
-  /** PUT: update the leave request on the server */
-  updateLeaveRequest(leaveRequest: LeaveRequest): Observable<any> {
-    return this.http.put(this.leaveRequestsUrl, leaveRequest, this.httpOptions).pipe(
-      tap(_ => console.log(`updated leave request id=${leaveRequest.id}`)),
-      catchError(this.handleError<any>('updateLeaveRequest'))
-    );
+  /** PUT: update the leave request on the server and return the updated object */
+  updateLeaveRequest(leaveRequest: LeaveRequest): Observable<LeaveRequest> {
+    const url = `${this.leaveRequestsUrl}/${leaveRequest.id}`;
+    return this.http
+      .put<LeaveRequest>(url, leaveRequest, this.httpOptions)
+      .pipe(
+        tap((updated) => console.log(`updated leave request id=${updated.id}`)),
+        catchError(this.handleError<LeaveRequest>('updateLeaveRequest'))
+      );
   }
 
   /** DELETE: delete the leave request from the server */
@@ -55,7 +61,7 @@ export class LeaveRequestService {
     const url = `${this.leaveRequestsUrl}/${id}`;
 
     return this.http.delete<LeaveRequest>(url, this.httpOptions).pipe(
-      tap(_ => console.log(`deleted leave request id=${id}`)),
+      tap((_) => console.log(`deleted leave request id=${id}`)),
       catchError(this.handleError<LeaveRequest>('deleteLeaveRequest'))
     );
   }
