@@ -1,14 +1,15 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { LeaveRequest } from '../models/leave-request';
 import { LeaveRequestService } from './leave-request.service';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LeaveStateService {
   private leaveRequests = signal<LeaveRequest[]>([]);
   isLoading = signal(true);
-  
+
   constructor(private leaveService: LeaveRequestService) {
     this.loadLeaveRequests();
   }
@@ -49,22 +50,24 @@ export class LeaveStateService {
       },
       error: () => {
         this.isLoading.set(false);
-      }
+      },
     });
   }
 
   // Add new leave request
-  public addLeaveRequest(request: LeaveRequest) {
-    return this.leaveService.addLeaveRequest(request).subscribe(newRequest => {
-      this.leaveRequests.update(requests => [...requests, newRequest]);
-    });
+  public addLeaveRequest(request: LeaveRequest): Observable<LeaveRequest> {
+    return this.leaveService.addLeaveRequest(request).pipe(
+      tap((newRequest) => {
+        this.leaveRequests.update((reqs) => [...reqs, newRequest]);
+      })
+    );
   }
 
   // Update leave request
   public updateLeaveRequest(request: LeaveRequest) {
     return this.leaveService.updateLeaveRequest(request).subscribe(() => {
-      this.leaveRequests.update(requests => 
-        requests.map(r => r.id === request.id ? request : r)
+      this.leaveRequests.update((requests) =>
+        requests.map((r) => (r.id === request.id ? request : r))
       );
     });
   }
