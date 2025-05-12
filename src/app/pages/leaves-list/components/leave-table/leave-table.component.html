@@ -1,0 +1,30 @@
+<mat-table [dataSource]="filteredLeaveRequests()">
+  <ng-container matColumnDef="employee">
+    <mat-header-cell *matHeaderCellDef>Employee</mat-header-cell>
+    <mat-cell *matCellDef="let request">{{request.employeeName}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="startDate">
+    <mat-header-cell *matHeaderCellDef>Start Date</mat-header-cell>
+    <mat-cell *matCellDef="let request">{{request.startDate | date}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="endDate">
+    <mat-header-cell *matHeaderCellDef>End Date</mat-header-cell>
+    <mat-cell *matCellDef="let request">{{request.endDate | date}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+    <mat-cell *matCellDef="let request">{{request.status}}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<mat-paginator 
+  [length]="filteredLeaveRequests().length"
+  [pageSize]="10"
+  [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>

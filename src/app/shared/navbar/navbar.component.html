@@ -1,0 +1,10 @@
+<mat-toolbar color="primary">
+  <span>{{title}}</span>
+  <span class="spacer"></span>
+  <button mat-button routerLink="/">Dashboard</button>
+  <button mat-button routerLink="/leaves">Leave Requests</button>
+  <button mat-button (click)="openNewLeaveModal()">New Request</button>
+  <button mat-button (click)="toggleRole()">
+    Switch to {{ isAdmin ? 'User' : 'Admin' }}
+  </button>
+</mat-toolbar>

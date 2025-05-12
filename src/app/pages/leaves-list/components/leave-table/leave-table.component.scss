@@ -1,0 +1,17 @@
+mat-table {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.mat-column-employee {
+  flex: 1;
+}
+
+.mat-column-startDate,
+.mat-column-endDate {
+  flex: 1;
+}
+
+.mat-column-status {
+  flex: 0.5;
+}

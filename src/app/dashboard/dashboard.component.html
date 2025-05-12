@@ -1,0 +1,32 @@
+<div class="dashboard-container">
+  <h2>Leave Requests Overview</h2>
+
+  <div class="stats-cards">
+    <mat-card class="stat-card pending">
+      <mat-card-header>
+        <mat-card-title>Pending</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-number">{{ leaveStats.pending }}</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card approved">
+      <mat-card-header>
+        <mat-card-title>Approved</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-number">{{ leaveStats.approved }}</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card rejected">
+      <mat-card-header>
+        <mat-card-title>Rejected</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-number">{{ leaveStats.rejected }}</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

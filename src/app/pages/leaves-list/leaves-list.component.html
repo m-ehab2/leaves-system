@@ -1,0 +1,7 @@
+<div class="leaves-list-container">
+  <h2>Leave Requests</h2>
+  
+  <app-leave-filters (filterChange)="handleFilterChange($event)"></app-leave-filters>
+  
+  <app-leave-table [filters]="currentFilters()"></app-leave-table>
+</div>
