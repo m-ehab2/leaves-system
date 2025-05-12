@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { LeaveRequestService } from '../services/leave-request.service';
-import { LeaveRequest } from '../models/leave-request';
+import { LeaveRequestService } from '../../services/leave-request.service';
+import { LeaveRequest } from '../../models/leave-request';
 import { ChartOptions, ChartData } from 'chart.js';
 
 @Component({

@@ -6,8 +6,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { LeaveRequestService } from '../../services/leave-request.service';
-import { LeaveTableComponent } from './components/leave-table/leave-table.component';
-import { LeaveFiltersComponent } from './components/leave-filters/leave-filters.component';
+import { LeaveFiltersComponent } from '../../components/leave-filters/leave-filters.component';
+import { LeaveTableComponent } from '../../components/leave-table/leave-table.component';
 
 @Component({
   selector: 'app-leaves-list',

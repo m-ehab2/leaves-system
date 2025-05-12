@@ -2,8 +2,8 @@ import { Component, signal, Input, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { LeaveRequest } from '../../../../models/leave-request';
-import { LeaveRequestService } from '../../../../services/leave-request.service';
+import { LeaveRequest } from '../../models/leave-request';
+import { LeaveRequestService } from '../../services/leave-request.service';
 
 @Component({
   selector: 'app-leave-table',
